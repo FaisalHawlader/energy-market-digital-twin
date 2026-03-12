@@ -53,11 +53,6 @@ This prototype demonstrates that you can:
 3. integrate **simulation, backend, forecasting, and UI**
 4. build something that looks closer to a **platform** than a research script
 
-## Suggested talking points
-
-You can present it like this:
-
-> I wanted to demonstrate how I approach full system development. So I built a small energy market digital twin platform with a simulator, a Kafka event bus, a digital twin backend that aggregates live state and forecasting logic, and an industrial-style dashboard. My goal was to show not only data analysis, but end-to-end platform thinking.
 
 ## Notes
 
