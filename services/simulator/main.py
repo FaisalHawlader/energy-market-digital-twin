@@ -11,6 +11,7 @@ from kafka import KafkaProducer
 
 from shared.models import EnergyMarketState
 
+
 class MarketSimulator:
     def __init__(self) -> None:
         self.current_time = datetime.now().replace(microsecond=0)
@@ -48,7 +49,8 @@ class MarketSimulator:
 
         renewable_total = solar + wind
         conventional_needed = max(0.0, demand - renewable_total)
-        conventional = round(min(500.0, conventional_needed + self.rng.uniform(-15, 20)), 2)
+        conventional_raw = conventional_needed + self.rng.uniform(-15, 20)
+        conventional = round(max(0.0, min(500.0, conventional_raw)), 2)
 
         interconnector_import = 0.0
         pre_battery_balance = renewable_total + conventional - demand
@@ -69,18 +71,33 @@ class MarketSimulator:
         if post_battery_balance < -20:
             interconnector_import = round(abs(post_battery_balance) * 0.85, 2)
 
-        reserve_margin = round(max(0.0, renewable_total + conventional + interconnector_import - demand), 2)
-        imbalance = round(abs(renewable_total + conventional + interconnector_import - demand - battery_power), 2)
+        reserve_margin = round(
+            max(0.0, renewable_total + conventional + interconnector_import - demand), 2
+        )
+        imbalance = round(
+            abs(renewable_total + conventional + interconnector_import - demand - battery_power), 2
+        )
 
         scarcity = max(0.0, demand - (renewable_total + conventional + interconnector_import))
         oversupply = max(0.0, (renewable_total + conventional) - demand)
         ramping_cost = max(0.0, conventional - 300) * 0.035
-        price_delta = 0.038 * scarcity - 0.012 * oversupply + ramping_cost + self.rng.uniform(-1.1, 1.1)
+        price_delta = (
+            0.038 * scarcity
+            - 0.012 * oversupply
+            + ramping_cost
+            + self.rng.uniform(-1.1, 1.1)
+        )
         self.last_price = max(22.0, min(260.0, self.last_price + price_delta))
         price = round(self.last_price, 2)
 
         renewable_share = round(min(100.0, max(0.0, 100 * renewable_total / max(demand, 1))), 2)
-        carbon_intensity = round(max(45.0, 420 - 2.4 * renewable_share + 0.12 * conventional + self.rng.uniform(-6, 6)), 2)
+        carbon_intensity = round(
+            max(
+                45.0,
+                420 - 2.4 * renewable_share + 0.12 * conventional + self.rng.uniform(-6, 6),
+            ),
+            2,
+        )
 
         if imbalance < 15 and reserve_margin > 25:
             status = "Stable"
@@ -110,12 +127,14 @@ class MarketSimulator:
             alert_flag=alert_flag,
         )
 
+
 def build_producer(bootstrap_servers: str) -> KafkaProducer:
     return KafkaProducer(
         bootstrap_servers=bootstrap_servers,
         value_serializer=lambda value: json.dumps(value).encode("utf-8"),
         key_serializer=lambda value: value.encode("utf-8"),
     )
+
 
 def main() -> None:
     bootstrap = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
@@ -129,8 +148,13 @@ def main() -> None:
         state = simulator.next_state()
         producer.send(topic, key="lux-grid", value=state.model_dump(mode="json"))
         producer.flush()
-        print(f"published {state.timestamp.isoformat()} price={state.market_price_eur_mwh} status={state.grid_status}")
+        print(
+            f"published {state.timestamp.isoformat()} "
+            f"price={state.market_price_eur_mwh} "
+            f"status={state.grid_status}"
+        )
         time.sleep(interval)
+
 
 if __name__ == "__main__":
     main()
