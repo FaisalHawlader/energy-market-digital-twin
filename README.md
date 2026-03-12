@@ -1,116 +1,141 @@
-# Industrial Energy Market Digital Twin Prototype
 
-A real-time, event-driven digital twin prototype for simulating,
-monitoring, and forecasting electricity market conditions.
+# Industrial Energy Market Digital Twin
 
-This project demonstrates an end-to-end systems engineering approach
-using a multi-service architecture with Kafka, FastAPI, Streamlit, and
-Docker. It is designed as a portfolio-quality prototype to showcase how
-a digital twin platform can be built for energy market monitoring and
-operational decision support.
+A **real-time, event-driven digital twin platform** for simulating, monitoring, and forecasting electricity market conditions.
 
-------------------------------------------------------------------------
+This project demonstrates how to design a **modern distributed digital twin system** using **Kafka, FastAPI, Streamlit, and Docker**. It simulates electricity grid dynamics, streams system states through an event pipeline, and provides APIs and dashboards for operational monitoring.
 
-# Overview
+The goal is to showcase **end-to-end system architecture for real-time energy system analytics**.
 
-The system simulates an electricity market environment and streams
-synthetic grid states through Kafka. A backend digital twin service
-consumes these events, maintains the current system state, generates
-forecasts and alerts, and exposes APIs for downstream applications.
+---
 
-A Streamlit dashboard provides a live operational view of the simulated
-system.
+#  Key Features
 
-The simulation includes:
+-  Real-time electricity market simulation
+-  Event-driven architecture using **Apache Kafka**
+-  Digital twin backend built with **FastAPI**
+-  Interactive monitoring dashboard using **Streamlit + Plotly**
+-  REST and WebSocket APIs for real-time data access
+-  Short-horizon forecasting and alert generation
+-  Fully containerized with **Docker Compose**
+-  Modular microservice architecture for extensibility
 
--   electricity demand
--   solar generation
--   wind generation
--   conventional generation
--   battery storage behavior
--   interconnector imports
--   reserve margin and imbalance
--   electricity price
--   carbon intensity
--   renewable share
--   grid operational status
+---
 
-------------------------------------------------------------------------
+# Digital Twin Concept
 
-# Key Features
+A **digital twin** continuously mirrors the state of a physical or simulated system.
 
--   Real-time energy market simulation
--   Kafka-based event streaming architecture
--   FastAPI backend serving digital twin state
--   Historical state tracking
--   Short-horizon forecasting
--   Automated alert generation
--   Streamlit + Plotly operational dashboard
--   Dockerized multi-service deployment
--   Modular architecture designed for future expansion
+In this prototype:
 
-------------------------------------------------------------------------
+1. A **market simulator** generates electricity system states.
+2. Events are streamed through **Kafka**.
+3. A **digital twin service** consumes events and maintains system state.
+4. APIs and dashboards provide **live operational insights**.
+
+---
 
 # System Architecture
 
-Simulator → Kafka Topic (energy.market.states) → FastAPI Digital Twin
-Backend → Streamlit Dashboard
+Simulator → Kafka Topic (energy.market.states) → Digital Twin Backend (FastAPI) → Streamlit Dashboard
 
-Future extensions may include optimization services, historian
-databases, anomaly detection systems, and external integrations.
+The architecture allows **new services to subscribe to Kafka streams** without modifying existing components.
 
-------------------------------------------------------------------------
+---
+
+# Simulated Grid Variables
+
+The simulator models key electricity market metrics:
+
+- Electricity demand
+- Solar generation
+- Wind generation
+- Conventional generation
+- Battery storage levels
+- Interconnector imports
+- Reserve margin / grid imbalance
+- Electricity price
+- Carbon intensity
+- Renewable energy share
+- Grid operational status
+
+---
 
 # Services
 
-## kafka
+## Simulator
 
-Kafka acts as the event streaming backbone of the system. All simulated
-market states are published to the topic:
+Generates synthetic electricity market states and publishes them to Kafka.
+
+Each event includes:
+
+- timestamp
+- demand
+- renewable generation
+- conventional generation
+- battery level
+- electricity price
+- carbon intensity
+- renewable share
+- grid status
+
+---
+
+## Kafka (Event Streaming)
+
+Kafka acts as the **event streaming backbone**.
+
+Topic used:
 
 energy.market.states
 
-This allows other services to subscribe to the stream without modifying
-the simulator.
+Multiple services can subscribe to this stream independently.
 
-## simulator
+---
 
-The simulator generates synthetic electricity market states and
-publishes them to Kafka.
+## Digital Twin API (FastAPI)
 
-Each event includes: - timestamp - renewable generation - conventional
-generation - system demand - battery level - electricity price - carbon
-intensity - renewable share - grid status
+The backend service maintains the **digital twin system state**.
 
-## api
+Capabilities:
 
-The FastAPI backend functions as the digital twin service. It:
+- consumes Kafka events
+- maintains historical state
+- generates forecasts
+- produces alerts
+- exposes APIs
 
--   consumes Kafka events
--   maintains system state history
--   generates forecasts
--   produces alerts
--   exposes REST and WebSocket APIs
+Supported interfaces:
 
-## dashboard
+- REST API
+- WebSocket streaming
 
-The Streamlit dashboard visualizes:
+---
 
--   live grid state
--   historical trends
--   renewable share
--   price dynamics
--   alerts
--   forecasts
+## Dashboard (Streamlit)
 
-------------------------------------------------------------------------
+The operational dashboard provides real-time insights into:
+
+- grid state
+- electricity price trends
+- renewable share
+- historical system behavior
+- alerts and forecasts
+
+---
 
 # Repository Structure
 
-. ├── docker-compose.yml ├── README.md └── services ├── api ├──
-dashboard ├── simulator └── shared
+.
+├── docker-compose.yml
+├── README.md
+└── services
+    ├── api
+    ├── dashboard
+    ├── simulator
+    └── shared
 
-------------------------------------------------------------------------
+---
 
 # Quick Start
 
@@ -118,106 +143,92 @@ dashboard ├── simulator └── shared
 
 Install:
 
--   Docker
--   Docker Compose
+- Docker
+- Docker Compose
 
-## Run the platform
+---
+
+## Run the Platform
 
 docker compose up --build
 
-This starts:
+This launches:
 
--   Kafka broker
--   simulator
--   API service
--   dashboard
+- Kafka broker
+- Simulator service
+- Digital Twin API
+- Streamlit dashboard
 
-------------------------------------------------------------------------
+---
 
 # Access the Platform
 
-API docs: http://localhost:8000/docs
+API documentation:
+http://localhost:8000/docs
 
-Dashboard: http://localhost:8501
+Dashboard:
+http://localhost:8501
 
-------------------------------------------------------------------------
+---
 
 # API Endpoints
 
-GET /api/health\
-GET /api/state\
-GET /api/history?points=120\
-GET /api/forecast?horizon=20\
-GET /api/alerts?limit=10\
-WS /ws/state
+GET /api/health
+GET /api/state
+GET /api/history?points=120
+GET /api/forecast?horizon=20
+GET /api/alerts?limit=10
+WS  /ws/state
 
-------------------------------------------------------------------------
+---
 
-# Example Use Cases
+# Example Applications
 
-This prototype demonstrates:
+This architecture can support:
 
--   digital twin platforms
--   energy system monitoring
--   real-time streaming pipelines
--   event-driven architecture
--   operational dashboards
--   forecasting and alert systems
+- energy market monitoring platforms
+- grid digital twins
+- smart grid analytics
+- renewable integration analysis
+- operational forecasting systems
+- real-time energy dashboards
 
-------------------------------------------------------------------------
+---
 
-# Why This Project Matters
+# Limitations
 
-Many projects focus only on data analysis notebooks. This project
-demonstrates full system design by integrating:
+This project is a **demonstration prototype**:
 
--   simulation
--   streaming infrastructure
--   backend services
--   forecasting
--   alerts
--   visualization
+- synthetic data generation
+- simple forecasting logic
+- no persistent historian database
+- static alert thresholds
+- not production hardened
 
-It highlights how a digital twin platform can be designed using modern
-distributed system architecture.
+---
 
-------------------------------------------------------------------------
+# Future Extensions
 
-# Current Limitations
+Possible improvements:
 
-This is a demonstration prototype:
+- TimescaleDB / PostgreSQL historian
+- Grafana monitoring
+- machine learning forecasting models
+- reinforcement learning battery optimization
+- anomaly detection services
+- integration with real electricity market data
+- Kubernetes deployment
 
--   synthetic data only
--   simple forecasting logic
--   no persistent database yet
--   static alert thresholds
--   not production hardened
+---
 
-------------------------------------------------------------------------
+# Project Summary
 
-# Possible Extensions
+This project demonstrates how to build a **real-time energy market digital twin platform** using a modern event-driven architecture.
 
-Future improvements could include:
+It integrates **simulation, streaming infrastructure, backend services, forecasting, and visualization** into a modular distributed system.
 
--   PostgreSQL or TimescaleDB historian
--   Grafana monitoring
--   machine learning forecasting
--   reinforcement learning battery optimization
--   anomaly detection services
--   real electricity market data
--   Kubernetes deployment
-
-------------------------------------------------------------------------
-
-# Example Project Description
-
-Built a real-time energy market digital twin prototype using Kafka,
-FastAPI, Streamlit, and Docker to simulate, monitor, and forecast
-electricity system conditions through an event-driven multi-service
-architecture.
-
-------------------------------------------------------------------------
+---
 
 # License
 
-Provided for demonstration and educational purposes.
+Provided for **educational and demonstration purposes**.
