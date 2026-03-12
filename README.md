@@ -44,9 +44,7 @@ Then open:
 - `GET /api/alerts`
 - `WS  /ws/state`
 
-## Why this is good for your LIST discussion
-
-This prototype demonstrates that you can:
+This prototype demonstrates:
 
 1. design a **multi-service system** rather than a notebook-only demo
 2. use **message-driven architecture** with Kafka
