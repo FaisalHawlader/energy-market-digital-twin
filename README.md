@@ -125,6 +125,7 @@ The operational dashboard provides real-time insights into:
 ---
 
 # Repository Structure
+
 ├── docker-compose.yml
 ├── README.md
 └── services
