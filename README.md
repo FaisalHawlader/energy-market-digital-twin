@@ -1,4 +1,4 @@
-# ⚡ Industrial Energy Market Digital Twin
+# Industrial Energy Market Digital Twin
 
 A **real-time, event-driven digital twin platform** for simulating, monitoring, and forecasting electricity market conditions.
 
@@ -18,18 +18,18 @@ This project demonstrates how to design a **modern distributed digital twin syst
 
 ## 🚀 Key Features
 
-- ⚡ Real-time electricity market simulation  
-- 📡 Event-driven architecture using **Apache Kafka**  
-- 🧠 Digital twin backend built with **FastAPI**  
-- 📊 Interactive monitoring dashboard using **Streamlit + Plotly**  
-- 🔌 REST and WebSocket APIs for real-time data access  
-- 📈 Short-horizon forecasting and alert generation  
-- 🐳 Fully containerized with **Docker Compose**  
-- 🧩 Modular microservice architecture for extensibility  
+- Real-time electricity market simulation  
+- Event-driven architecture using **Apache Kafka**  
+- Digital twin backend built with **FastAPI**  
+- Interactive monitoring dashboard using **Streamlit + Plotly**  
+- REST and WebSocket APIs for real-time data access  
+- Short-horizon forecasting and alert generation  
+- Fully containerized with **Docker Compose**  
+- Modular microservice architecture for extensibility  
 
 ---
 
-## 🧠 Digital Twin Concept
+## Digital Twin Concept
 
 A **digital twin** continuously mirrors the state of a physical or simulated system.
 
@@ -42,7 +42,7 @@ In this prototype:
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```text
 Simulator → Kafka Topic (energy.market.states) → Digital Twin Backend (FastAPI) → Streamlit Dashboard
@@ -159,7 +159,7 @@ Install:
 
 ---
 
-### ▶️ Run the Platform
+### Run the Platform
 
 ```bash
 docker compose up --build
@@ -174,7 +174,7 @@ This launches:
 
 ---
 
-## 🌐 Access the Platform
+##  Access the Platform
 
 API documentation:
 
@@ -190,7 +190,7 @@ http://localhost:8501
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 ```http
 GET /api/health
@@ -207,12 +207,12 @@ WS  /ws/state
 
 This architecture can support:
 
-- ⚡ Energy market monitoring platforms  
-- 🌍 Grid digital twins  
-- 🔋 Smart grid analytics  
-- 🌱 Renewable integration analysis  
-- 📊 Operational forecasting systems  
-- 🖥️ Real-time energy dashboards  
+-  Energy market monitoring platforms  
+- Grid digital twins  
+- Smart grid analytics  
+- Renewable integration analysis  
+- Operational forecasting systems
+- Real-time energy dashboards  
 
 ---
 
