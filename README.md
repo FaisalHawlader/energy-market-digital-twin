@@ -135,8 +135,6 @@ The operational dashboard provides real-time insights into:
     ├── simulator
     └── shared
 
----
-
 # Quick Start
 
 ## Prerequisites
