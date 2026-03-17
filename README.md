@@ -8,6 +8,14 @@ This project demonstrates how to design a **modern distributed digital twin syst
 
 ---
 
+<p align="center">
+  <img src="architecture.png" alt="System Architecture" width="800"/>
+</p>
+
+<p align="center">
+  <em>Figure: Event-driven digital twin architecture using Kafka, FastAPI, and Streamlit</em>
+</p>
+
 ## 🚀 Key Features
 
 - ⚡ Real-time electricity market simulation  
